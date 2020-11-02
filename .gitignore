@@ -1,5 +1,8 @@
 /casos_de_prueba
 *.txt
+*.pdf
+*.grplp
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
