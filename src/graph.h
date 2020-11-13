@@ -1,20 +1,33 @@
-#ifdef GRAPH_H
+#ifndef GRAPH_H
 #define GRAPH_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 typedef struct
 {
-    int id;     // Number identify, unique for each node
-    float prob; // Probability of that a user does not finish on this node
+    int id;
+    char name[50];
+    char web[100];
+    float prob;
 } Node;
 
 typedef struct
 {
     int num_nodes;
-    Node *nodes;
+    Node *AdjList;
+    float **AdjMatrix;
 } Graph;
 
-Graph *init_graph();
+Graph *CreateGraph(int num_nodes);
 
-float Probability(Graph *G, char *nodo_1, char *nodo_2);
+void PrintGraPh(Graph *G);
 
-#endif /* GRAPH_H */
+float Probability(Graph *G, Node *node_src, Node *node_dest);
+
+Node *GetNode(Graph *G, char *name_node);
+
+char equal_name(char *C1, char *C2);
+
+#endif
