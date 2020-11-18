@@ -38,42 +38,36 @@ int main(int arg, char *argv[])
     fscanf(fin, "%d", &size);
     Graph *G = CreateGraph(size);
 
-    char name[50], web[100], last_name[50];
+    char name[MAX_NAME], web[MAX_WEB], last_name[MAX_NAME];
     float prob, weight_edge;
-    int amount_neighbour, id_node;
-    for (int i = 0; 1; i++)
+    int amount_neighbor, id_node;
+    for (int i = 0;; i++)
     {
+        fscanf(fin, "%s %s %f %d", name, web, &prob, &amount_neighbor);
 
-        fscanf(fin, "%s %s %f %d", name, web, &prob, &amount_neighbour);
-
-        if (equal_name(name, last_name) != 1)
-        {
-            G->AdjList[i].id = i;
-            strcpy(G->AdjList[i].name, name);
-            strcpy(G->AdjList[i].web, web);
-            G->AdjList[i].prob = prob;
-            printf("<<%s,%s", G->AdjList[i].name, name);
-
-            for (int j = 0; j < amount_neighbour; j++)
-            {
-                fscanf(fin, "%d %f", &id_node, &weight_edge);
-                G->AdjMatrix[G->AdjList[i].id][id_node] = weight_edge;
-            }
-        }
-        else
+        if (!strcmp(name, last_name))
         {
             break;
         }
 
-        for (int i = 0; i < 50; i++)
+        G->AdjList[i].id = i;
+        G->AdjList[i].prob = prob;
+        strcpy(G->AdjList[i].name, name);
+        strcpy(G->AdjList[i].web, web);
+        
+
+        for (int j = 0; j < amount_neighbor; j++)
         {
-            last_name[i] = name[i];
+            fscanf(fin, "%d %f", &id_node, &weight_edge);
+            G->AdjMatrix[G->AdjList[i].id][id_node] = weight_edge;
         }
+
+        strcpy(last_name, name);
+
     }
     PrintInterfaceConsole(G);
 
-    Node *node_src = GetNode(G, argv[2]);
-    Node *node_des = GetNode(G, argv[3]);
-    printf("\nLa probabilidad de visitar %s, iniciando la navegación en %s, es igual a %.2f%%", argv[3], argv[2], (100 * Probability(G, node_src, node_des)));
+    float probability = Probability(G, GetNode(G, argv[2]), GetNode(G, argv[3]));
+    printf("\nLa probabilidad de visitar %s, iniciando la navegación en %s, es igual a %.2f%%", argv[3], argv[2], 100 * probability);
     return 0;
 }
