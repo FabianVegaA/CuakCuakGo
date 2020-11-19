@@ -36,7 +36,7 @@ void PrintGraPh(Graph *G)
     }
 }
 
-float Probability(Graph *G, Node *node_src, Node *node_dest)
+float Probability(Graph *G, Node *node_src, Node *node_dest, int recursions)
 {
     if (node_src == NULL || node_dest == NULL)
     {
@@ -44,8 +44,9 @@ float Probability(Graph *G, Node *node_src, Node *node_dest)
         exit(1);
     }
 
-    if (node_src->id == node_dest->id)
-    {
+    if (recursions >= MAX_RECURSIONS || node_src->id == node_dest->id)
+    { 
+        printf(" %d ", recursions);
         return 1.0;
     }
 
@@ -65,26 +66,17 @@ float Probability(Graph *G, Node *node_src, Node *node_dest)
         {
             if (visited[i] == 0)
             {
-                prob = prob + node_src->prob * G->AdjMatrix[node_src->id][i] * Probability(G, &G->AdjList[i], node_dest);
+                prob = prob + node_src->prob * G->AdjMatrix[node_src->id][i] * Probability(G, &G->AdjList[i], node_dest, ++recursions);
+                printf(">> %.2f%% ", prob);
             }
         }
     }
 
-    visited[node_src->id];
+    visited[node_src->id] = 0;
+
+    free(visited);
 
     return prob;
-}
-
-char equal_name(char *C1, char *C2)
-{
-    for (int i = 0; i < strlen(C1) || i < strlen(C2); i++)
-    {
-        if (C1[i] != C2[i])
-        {
-            return 0;
-        }
-    }
-    return 1;
 }
 
 Node *GetNode(Graph *G, char *name_node)
@@ -92,7 +84,7 @@ Node *GetNode(Graph *G, char *name_node)
 
     for (int i = 0; i < G->num_nodes; i++)
     {
-        if (equal_name(G->AdjList[i].name, name_node) == 1)
+        if (!strcmp(G->AdjList[i].name, name_node))
         {
             return &G->AdjList[i];
         }
