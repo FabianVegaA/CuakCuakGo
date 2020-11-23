@@ -44,9 +44,8 @@ float Probability(Graph *G, Node *node_src, Node *node_dest, int recursions)
         exit(1);
     }
 
-    if (recursions >= MAX_RECURSIONS || node_src->id == node_dest->id)
-    { 
-        printf(" %d ", recursions);
+    if (node_src->id == node_dest->id)
+    {
         return 1.0;
     }
 
@@ -58,7 +57,7 @@ float Probability(Graph *G, Node *node_src, Node *node_dest, int recursions)
 
     visited[node_src->id] = 1;
 
-    float prob = 0.0;
+    float prob = 0;
 
     for (int i = 0; i < G->num_nodes; i++)
     {
@@ -66,8 +65,13 @@ float Probability(Graph *G, Node *node_src, Node *node_dest, int recursions)
         {
             if (visited[i] == 0)
             {
+                if (recursions >= MAX_RECURSIONS)
+                {
+
+                    prob = prob + node_src->prob * G->AdjMatrix[node_src->id][i] * CONST_OF_CORRECTION;
+                    return prob;
+                }
                 prob = prob + node_src->prob * G->AdjMatrix[node_src->id][i] * Probability(G, &G->AdjList[i], node_dest, ++recursions);
-                printf(">> %.2f%% ", prob);
             }
         }
     }
@@ -91,4 +95,17 @@ Node *GetNode(Graph *G, char *name_node)
     }
     printf("ERROR: The node %s there is not in the graph\n", name_node);
     return NULL;
+}
+
+void FreeGraph(Graph *G)
+{
+    free(G->AdjList); 
+
+    for (int i = 0; i < G->num_nodes; i++){
+        free(G->AdjMatrix[i]);
+    }
+
+    free(G->AdjMatrix);
+
+    free(G);
 }

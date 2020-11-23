@@ -6,9 +6,10 @@
 #include <string.h>
 #include <assert.h>
 
-#define MAX_NAME 50
-#define MAX_WEB 100
-#define MAX_RECURSIONS 15000000
+#define MAX_NAME 50               // This is the
+#define MAX_WEB 100               // length of names and web
+#define MAX_RECURSIONS 20         // and this saves the maximum value of the number of recursions that the program can
+#define CONST_OF_CORRECTION 0.723 // this value corrects the probability
 
 typedef struct
 {
@@ -20,7 +21,7 @@ typedef struct
 
 typedef struct
 {
-    int num_nodes;
+    int num_nodes; 
     Node *AdjList;
     float **AdjMatrix;
 } Graph;
@@ -33,5 +34,6 @@ float Probability(Graph *G, Node *node_src, Node *node_dest, int recursions);
 
 Node *GetNode(Graph *G, char *name_node);
 
+void FreeGraph(Graph *G);
 
 #endif
