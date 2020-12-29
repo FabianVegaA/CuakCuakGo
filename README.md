@@ -47,6 +47,7 @@ For example:
 ```
 This also can represent like 
 ![Graph](Graph.png)
+
 For go to `mercadolibre` since `pcfactory` we have 2 posibles ways and its probobality
 - `pcfactory` -> `mercadolibre`: 0.9 * 0.7 = 0.63
 - `pcfactory` -> `soletta` -> `mercadolibre`: 0.9 * 0.3 * 0.5 * 0.5 = 0.0675
