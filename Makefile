@@ -1,12 +1,12 @@
-all: bin/tarea-2 bin/bonus
+all: bin/exe bin/bonus
 
 # This compile the file bonus
-bin/tarea-2: bin/tarea-2.o bin/graph.o bin/display.o
+bin/exe: bin/main.o bin/graph.o bin/display.o
 	mkdir -p bin
-	gcc -o bin/tarea-2 -g -Wall -std=c99 bin/tarea-2.o bin/graph.o bin/display.o
+	gcc -o bin/exe -g -Wall -std=c99 bin/main.o bin/graph.o bin/display.o
 
-bin/tarea-2.o: src/tarea-2.c src/display.h
-	gcc -c -std=c11 -Wall -ggdb3 src/tarea-2.c -o bin/tarea-2.o
+bin/main.o: src/tarea-2.c src/display.h
+	gcc -c -std=c11 -Wall -ggdb3 src/tarea-2.c -o bin/main.o
 
 bin/graph.o: src/graph.c src/graph.h
 	gcc -c -std=c11 -Wall -ggdb3 src/graph.c -o bin/graph.o
