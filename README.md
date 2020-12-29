@@ -46,6 +46,8 @@ For example:
 13 ripley ripley.cl 0.0 0
 ```
 This also can represent like 
+<br/>
+<br/>
 ![Graph](Graph.png)
 
 For go to `mercadolibre` since `pcfactory` we have 2 posibles ways and its probobality
